@@ -1,0 +1,42 @@
+syntax = "proto3";
+package fake_data.reduced;
+
+import "card.proto";
+
+message BlockZCollection
+{
+ string id = 1;
+ string id_z = 2;
+ string cat_a = 3;
+ string cat_b = 4;
+ string cat_tree = 5;
+ repeated Card cards = 6;
+ double score = 7;
+
+ enum Target
+ {
+  UNKNOWN = 0;
+  A = 1;
+  B = 2;
+  C = 3;
+  D = 4;
+ }
+ Target target = 8;
+
+ string version = 9;
+ string id_1 = 10;
+ string id_2 = 11;
+ string id_3 = 12;
+
+ message EXT_alpha
+ {
+  int32 table = 1;
+  string id = 2;
+  int32 value_a = 3;
+  int32 value_b = 4;
+  int32 value_c = 5;
+  int32 value_d = 6;
+  int64 chksum = 7;
+ }
+ EXT_alpha ext = 13;
+}

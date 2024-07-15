@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+message Opponent
+{
+ enum Type
+ {
+  Unkown = 0;
+  Fodder = 1;
+  Average = 2;
+  Elite = 3;
+  Keeper = 4;
+  Caster = 5;
+  Warrior = 6;
+  Boss = 7;
+  Player = 8;
+ }
+ Type type = 1;
+
+ uint64 id = 2;
+ string name = 3;
+ uint32 time_1 = 4;
+ uint32 time_2 = 5;
+ uint32 time_3 = 6;
+ uint32 time_4 = 7;
+ uint32 time_5 = 8;
+ uint32 time_6 = 9;
+ string cat = 10;
+}
+

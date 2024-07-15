@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+message Card
+{
+ string id = 1;
+ string name = 2;
+ string cat = 3;
+ int32 count = 4;
+ double value_1 = 5;
+ double value_2 = 6;
+ double value_3 = 7;
+}
+
