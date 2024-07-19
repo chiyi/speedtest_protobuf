@@ -1,3 +1,4 @@
 create_fakedata
 read_file
 *.log
+*.s

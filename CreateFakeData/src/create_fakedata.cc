@@ -1,27 +1,29 @@
 #include <iostream>
-#include <string>
-#include <vector>
-#include <fstream>
-#include "fake_anadata.pb.h"
 
 #include "TSystem.h"
-#include "TBase64.h"
+#include "TROOT.h"
 #include "TString.h"
 #include "TRandom3.h"
 
 // user-defined functions
-#include "gen_fakeanadata.cc"
+#define b_DEBUG 3
 bool chk_para(int argc, char *argv[]);
+void protection(int &nrows_part, int &nthreads);
 void usage();
-void write_files(const std::vector<fake_data::analysis::FakeAnaData> &res, char out_prefix[]);
+#include "job.h"
+#include "job.cpp"
+#include "job_fakedata.h"
+#include "job_fakedata.cpp"
+#include "jobs_scheduler.h"
+#include "jobs_scheduler.cpp"
 
 
 int main(int argc, char *argv[])
 {
- std::vector<fake_data::analysis::FakeAnaData> res;
-
- int nrows=0;
+ int nrows=0, nrows_part=0, nrows_tail=0, nparts=0, nthreads=1;
  TRandom3 rndm;
+ Job_fakedata::Settings_fakedata settings;
+ JobsScheduler<Job_fakedata> *scheduler;
 
 
  if(!chk_para(argc, argv))
@@ -30,34 +32,39 @@ int main(int argc, char *argv[])
   return 2;
  }
 
+ //ROOT::EnableImplicitMT(nthreads); // Enable multi-threading
+ ROOT::EnableImplicitMT(); // Enable multi-threading
+ ROOT::EnableThreadSafety();
+
  rndm.SetSeed(13931);
  nrows = TString(argv[1]).Atoi();
- std::cout << "To generate " << nrows << " records of fake data." << std::endl;
- res.resize(nrows);
- auto it_fakedata = res.begin();
- for (int ievt=0; ievt<nrows; ++ievt, ++it_fakedata)
-  create_ith_fakedata(it_fakedata, ievt, rndm);
+ nrows_part = TString(argv[3]).Atoi();
+ nthreads = TString(argv[4]).Atoi();
+ nrows_tail = nrows % nrows_part;
+ nparts = nrows / nrows_part + (nrows_tail > 0) * 1;
 
- for (auto it=res.begin(); it!=res.end(); it++)
- {
-  std::cout << it->history_size() << "\n";
-  std::cout << it->blockz().blockz().cat_tree() << std::endl;
- }
+ std::cout << "Generating " << nrows << " records of fake data ";
+ std::cout << "with " << nparts << " partitions, where each partition has " << nrows_part << " records, except for the tail partition (" << nrows_tail << " records)" << std::endl;
 
- write_files(res, argv[2]);
+ settings.nparts = nparts;
+ settings.nrows_part = nrows_part;
+ settings.nrows_tail = nrows_tail;
+ settings.out_prefix = argv[2];
+
+ scheduler = new JobsScheduler<Job_fakedata>(nparts, nthreads, &rndm, Job_fakedata(0, &rndm, settings));
+ scheduler->run_jobs();
 
  return 0;
 }
 
 
-
-
 bool chk_para(int argc, char *argv[])
 {
- int nrows=0;
+ const int min_args=5, max_nrows=1000, max_threads=1;
+ int nrows=0, nrows_part=0, nthreads=1;
  TString outdir;
 
- if(argc<=2)
+ if(argc<min_args)
   return false;
 
  nrows = TString(argv[1]).Atoi();
@@ -66,48 +73,56 @@ bool chk_para(int argc, char *argv[])
   std::cout << "nrows=" << nrows << " <= 0\n";
   return false;
  }
-
+ 
  outdir = gSystem->GetDirName(argv[2]);
  if(gSystem->AccessPathName(outdir))
  {
-  std::cout << "outdir " << outdir << " fault!\n";
+  std::cout << "Invalid output directory " << outdir << ".\n";
   return false;
  }
+
+ nrows_part = TString(argv[3]).Atoi();
+ if(nrows_part<=0)
+ {
+  std::cout << "nrows_part=" << nrows_part << " <= 0\n";
+  return false;
+ }
+
+ nthreads = TString(argv[4]).Atoi();
+ if(nthreads<=0)
+ {
+  std::cout << "nthreads=" << nthreads << " <= 0\n";
+  return false;
+ }
+
+ //REMOVE or COMMENT-OUT THIS ACTION FOR SPEED WHEN HAVING CAPABLE MEMORY
+ protection(nrows_part, nthreads);
 
  return true;
 }
 
 void usage()
 {
- std::cout << "usage(): ./create_fakedata 10 /data/fakedata\n";
- std::cout << "./create_fakedata {number of records} {output filename prefix}" << std::endl;
+ std::cout << "usage(): ./create_fakedata 10 /data/fakedata 1 7\n";
+ std::cout << "./create_fakedata {number of records} {output filename prefix} {number of records per partition} {maximum working threads for creation}" << std::endl;
 }
 
-void write_files(const std::vector<fake_data::analysis::FakeAnaData> &res, char out_prefix[])
+void protection(int &nrows_part, int &nthreads)
 {
- TString outfilename;
+ const int max_nrows = 1000;
+ const int max_nthreads = 1;
+ TString warn = "Consider removing this protection in the code if you're already monitoring memory usage for larger cases.";
 
- int ith=0;
- std::string delim, outbin, outstr;
-
- delim = "\001\002\003\004\005\006\007\010\n";
- outfilename = TString::Format("%s_1.txt", out_prefix);
- std::ofstream output_file(outfilename.Data(), std::ios::trunc);
- std::cout << "writing " << outfilename << "...\n";
- for (const auto &row : res)
+ if(nrows_part > max_nrows)
  {
-  outbin = row.SerializeAsString();
-  outstr = TBase64::Encode(outbin.c_str(), outbin.length());
-  output_file.write(outstr.c_str(), outstr.size());
-  output_file << delim;
-  if(ith==0)
-  {
-   std::cout << outstr << "\n";
-   ith++;
- }}
- if (!output_file.good())
-  std::cerr << "Error writing to file " << outfilename << std::endl;
+  std::cout << "nrows_part=" << nrows_part << " > " << max_nrows << ". \n" << warn << std::endl;
+  nrows_part = max_nrows;
+ }
 
- output_file.close();
+ if(nthreads > max_nthreads)
+ {
+  std::cout << "Protected by limiting threads to " << max_nthreads << " for `fake_data::analysis::FakeAnaData` creation . \n" << warn << std::endl;
+  nthreads = max_nthreads;
+ }
 }
 

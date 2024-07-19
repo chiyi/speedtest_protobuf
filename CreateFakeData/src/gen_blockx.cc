@@ -20,7 +20,6 @@ fake_data::reduced::BlockXCollection gen_randblkx(int ievt, int64_t ts, TRandom3
  bool is_a=false;
  int size_opponents=0, size_cards=0, int_blocktype=0;
  int32_t block_i=0;
- char cat_base='\0';
  BlockType block_type;
  std::string id, idz, cat_a, player, title, country, block_name;
  

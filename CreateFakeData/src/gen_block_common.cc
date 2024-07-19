@@ -21,7 +21,7 @@ std::string gen_id(int ievt, int64_t ts, TRandom3 &rndm)
  TString id, tail;
 
  id = TString::Format("%016X_%li", ievt, ts);
- tail = TString::Format("%X", id.Hash());
+ tail = TString::Format("%X", id.Hash()%347);
  res = TString::Format("rcrd_%d_%s_%s", (int) rndm.Uniform(0., 16.), id.Data(), tail(4, tail.Length()-4).Data());
 
  return res;
@@ -132,7 +132,7 @@ std::string gen_cat_a(TRandom3 &rndm)
 
 std::string gen_player(TRandom3 &rndm)
 {
- return (std::string) TString::Format("%X", (UInt_t) rndm.Uniform(0., 1.0e16));
+ return (std::string) TString::Format("%X", (UInt_t) rndm.Uniform(0., 1.0e6));
 }
 #endif
 

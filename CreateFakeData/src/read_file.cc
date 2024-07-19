@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <zlib.h>
 #include <google/protobuf/util/json_util.h>
 #include "fake_anadata.pb.h"
 
@@ -63,10 +64,9 @@ void usage()
 std::vector<std::string> get_filenames(const std::string& filename_fmt)
 {
  std::vector<std::string> res;
- int from = 0;
+ int from=0;
  TString cmd, filenames, tok;
 
- std::cout << "filename_fmt=" << filename_fmt << "\n";
  cmd = TString::Format("ls %s", filename_fmt.c_str());
  filenames = gSystem->GetFromPipe(cmd.Data());
  while (filenames.Tokenize(tok, from, "\n"))
@@ -77,35 +77,46 @@ std::vector<std::string> get_filenames(const std::string& filename_fmt)
 
 void read_file(std::string inpfile)
 {
- int ith_line=0;
- std::string line, outbin;
- TString tstr, delim;
+ const int size_gzbuf=10240;
+ int ith_line=0, from=0, errnum=0, bytesRead=0;
+ std::string outbin;
+ const TString delim="\001\002\003\004\005\006\007\010";
+ char gzbuf[size_gzbuf];
+ TString line, all_lines, errmsg;
  fake_data::analysis::FakeAnaData outobj;
- std::fstream fs_inp;
+ gzFile gzfs;
 
 
- delim = "\001\002\003\004\005\006\007\010";
- fs_inp.open(inpfile.c_str(), std::fstream::in);
- while(std::getline(fs_inp, line).good())
+ gzfs = gzopen(inpfile.c_str(), "rb");
+ while ((bytesRead = gzread(gzfs, gzbuf, size_gzbuf)) > 0)
+  all_lines.Append(gzbuf, bytesRead);
+ if(errnum != Z_OK)
  {
-  tstr = line;
-  if (!tstr.EndsWith(delim))
+  errmsg = gzerror(gzfs, &errnum);
+  std::cerr << "Error reading file: code=" << (int)errnum << ", " << errmsg.Data() << std::endl;
+  exit(EXIT_FAILURE);
+ }
+ gzclose(gzfs);
+
+ while (all_lines.Tokenize(line, from, "\n"))
+ {
+  if (!line.EndsWith(delim))
   {
    std::cout << "WARN: Unexpected Newline detected !!!\n";
    continue;
   }
-  tstr = tstr(0, tstr.Length() - 8);
-  tstr = TBase64::Decode(tstr.Data());
-  outbin = std::string(tstr, tstr.Length());
+  line = line(0, line.Length() - 8);
+  line = TBase64::Decode(line.Data());
+  outbin = std::string(line, line.Length());
   if (!outobj.ParseFromString(outbin))
   {
    std::cout << "WARN: Parse Failed.\n";
    continue;
   }
-
+  
   if (ith_line < 20)
    print_data(ith_line, outobj);
-
+  
   ith_line++;
  }
 }

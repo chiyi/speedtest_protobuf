@@ -15,12 +15,12 @@
 #include "gen_blocky.cc"
 #include "gen_blockz.cc"
 #include "gen_event_blockz.cc"
-void create_ith_fakedata(std::vector<fake_data::analysis::FakeAnaData>::iterator &it, int ievt, TRandom3 &rndm);
+void create_ith_fakedata(int job_id, std::vector<fake_data::analysis::FakeAnaData>::iterator &it, int ievt, TRandom3 &rndm);
 std::string gen_hashed_name(TRandom3 &rndm);
-fake_data::analysis::Event gen_randevt(int ievt, TRandom3 &rndm, const fake_data::analysis::Event &evtblkz);
+fake_data::analysis::Event gen_randevt(int job_id, int ievt, TRandom3 &rndm, const fake_data::analysis::Event &evtblkz);
 
 
-void create_ith_fakedata(std::vector<fake_data::analysis::FakeAnaData>::iterator &it, int ievt, TRandom3 &rndm)
+void create_ith_fakedata(int job_id, std::vector<fake_data::analysis::FakeAnaData>::iterator &it, int ievt, TRandom3 &rndm)
 {
  //message FakeAnaData
  fake_data::analysis::FakeAnaData &res = *it;
@@ -38,7 +38,7 @@ void create_ith_fakedata(std::vector<fake_data::analysis::FakeAnaData>::iterator
  size_history = std::max(0, (int) rndm.Gaus(10, ievt%10));
  res.mutable_history()->Reserve(size_history);
  for (int idx=0; idx<size_history; ++idx)
-  *res.add_history() = gen_randevt(ievt, rndm, res.blockz());
+  *res.add_history() = gen_randevt(job_id, ievt, rndm, res.blockz());
  *res.add_history() = res.blockz();
 }
 
@@ -55,7 +55,7 @@ std::string gen_hashed_name(TRandom3 &rndm)
  return res;
 }
 
-fake_data::analysis::Event gen_randevt(int ievt, TRandom3 &rndm, const fake_data::analysis::Event &evtblkz)
+fake_data::analysis::Event gen_randevt(int job_id, int ievt, TRandom3 &rndm, const fake_data::analysis::Event &evtblkz)
 {
  //message Event
  fake_data::analysis::Event res;
@@ -64,11 +64,12 @@ fake_data::analysis::Event gen_randevt(int ievt, TRandom3 &rndm, const fake_data
  int64_t ts=0;
  double score=0.;
  std::string blks;
+ TString hname, f1name;
  TF1 *f_blk;
  TH1I *htmp;
  
- 
- htmp = new TH1I("htmp", "int-discrete probability", 5, 0., 5.);
+ hname = TString::Format("htmp_%d", job_id);
+ htmp = new TH1I(hname.Data(), "int-discrete probability", 5, 0., 5.);
  htmp->Fill("X",0.); htmp->Fill("XY",0.); htmp->Fill("Y",0.); htmp->Fill("YZ",0.); htmp->Fill("Z",0.);
 
  // int64 timestamp = 1;
@@ -78,9 +79,10 @@ fake_data::analysis::Event gen_randevt(int ievt, TRandom3 &rndm, const fake_data
  //fake_data.reduced.BlockXCollection blockx = 2;
  //fake_data.reduced.BlockYCollection blocky = 3;
  //fake_data.reduced.BlockZCollection blockz = 4;
- f_blk = new TF1("f_blk", "exp([0]*x)", 0., 5.);
+ f1name = TString::Format("f_blk_%d", job_id);
+ f_blk = new TF1(f1name.Data(), "exp([0]*x)", 0., 5.);
  f_blk->SetParameter(0, -(ievt % 5 + 1) / 10.);
- htmp->FillRandom("f_blk", 1000);
+ htmp->FillRandom(f1name, 1000);
  blks = htmp->GetXaxis()->GetBinLabel(htmp->FindBin(htmp->GetRandom()));
  for (char c : blks)
  {
@@ -108,6 +110,7 @@ fake_data::analysis::Event gen_randevt(int ievt, TRandom3 &rndm, const fake_data
  for (int idx=0; idx<size_boxes; ++idx)
   *res.add_boxes() = gen_randbox(rndm);
 
+ delete f_blk;
  delete htmp;
  return res;
 }
