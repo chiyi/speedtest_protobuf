@@ -12,6 +12,7 @@ LIBS_COMPILE_ROOT=$(root-config --cflags --glibs)
 # Protobuf flags
 CFLAG_COMPILE_PROTOBUF=$(pkg-config --cflags protobuf)
 LIBS_COMPILE_PROTOBUF=$(pkg-config --libs protobuf)
+#LIBS_COMPILE_PROTOBUF=$(pkg-config --libs protobuf-lite)
 
 # Generate C++ classes from proto files
 cd "${WORKPATH}"
@@ -21,7 +22,8 @@ protoc -I proto --cpp_out="${PATH_PROTOCLASS}" proto/*.proto
 cd "$WORKPATH/$PATH_PROTOCLASS"
 for file in *.pb.cc
 do
- c++ -g -c -Wall ${CFLAG_COMPILE_PROTOBUF} ${file} -o "${file%.cc}.o" ${LIBS_COMPILE_PROTOBUF}
+ #c++ -g -c -Wall ${CFLAG_COMPILE_PROTOBUF} ${file} -o "${file%.cc}.o" ${LIBS_COMPILE_PROTOBUF}
+ c++ -g -O3 -c -Wall ${CFLAG_COMPILE_PROTOBUF} ${file} -o "${file%.cc}.o" ${LIBS_COMPILE_PROTOBUF}
 done
 
 # Compile and test objects

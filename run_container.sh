@@ -11,6 +11,7 @@ docker run \
  -w "/work-dir" \
  -v ${PWD}/workdir:/work-dir \
  -v ${PWD}/CreateFakeData:/work-dir/CreateFakeData \
+ -v ${PWD}/Test_NaiveParsing:/work-dir/Test_NaiveParsing \
  -v ${PWD}/fakedata:/data \
  -it docker_protobuf \
  /bin/bash
