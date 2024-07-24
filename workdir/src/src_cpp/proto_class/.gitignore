@@ -1,0 +1,7 @@
+*.cc
+*.h
+*.pcm
+*.d
+*.so
+*.o
+test_objs

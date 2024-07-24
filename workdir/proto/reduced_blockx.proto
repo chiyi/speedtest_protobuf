@@ -1,0 +1,22 @@
+syntax = "proto3";
+package fake_data.reduced;
+
+import "blocktype.proto";
+import "card.proto";
+import "opponent.proto";
+
+message BlockXCollection
+{
+ string id = 1;
+ string id_z = 2;
+ string cat_a = 3;
+ string player = 4;
+ string title = 5;
+ string country = 6;
+ int32 block_i = 7;
+ bool is_a = 8;
+ repeated Opponent opponents = 9;
+ BlockType block_type = 10;
+ string block_name = 11;
+ repeated Card cards = 12;
+}

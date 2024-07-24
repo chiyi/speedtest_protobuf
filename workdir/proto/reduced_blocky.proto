@@ -1,0 +1,16 @@
+syntax = "proto3";
+package fake_data.reduced;
+
+import "card.proto";
+
+message BlockYCollection
+{
+ string id = 1;
+ string id_z = 2;
+ string id_c1 = 3;
+ string id_c2 = 4;
+ string cat_tree = 5;
+ repeated Card cards = 6;
+ string player = 7;
+ string zone = 8;
+}

@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+enum BlockType
+{
+ UNKNOWN = 0;
+ X = 1;
+ Y = 2;
+ Z = 3;
+ C1 = 4;
+ C2 = 5;
+ C3 = 6;
+ C4 = 7;
+ C5 = 8;
+ P1 = 9;
+ OTHERS = 10;
+}
+

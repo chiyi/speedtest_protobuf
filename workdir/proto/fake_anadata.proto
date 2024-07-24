@@ -1,0 +1,31 @@
+syntax = "proto3";
+package fake_data.analysis;
+
+import "reduced_blockx.proto";
+import "reduced_blocky.proto";
+import "reduced_blockz.proto";
+
+message Event
+{
+ int64 timestamp = 1;
+ fake_data.reduced.BlockXCollection blockx = 2;
+ fake_data.reduced.BlockYCollection blocky = 3;
+ fake_data.reduced.BlockZCollection blockz = 4;
+ double score = 5;
+ repeated Box boxes = 6;
+}
+
+message Box
+{
+ string color = 1;
+ double cost = 2;
+ int32 count = 3;
+}
+
+message FakeAnaData
+{
+ string title = 1;
+ string hashed_name = 2;
+ Event blockz = 3;
+ repeated Event history = 4;
+}
