@@ -13,18 +13,18 @@ root@X:/work-dir/Test_NaiveParsing# scripts/test_cppnaiveparsing.sh
 processing /data/fakedata_7.txt.gz......
 processing /data/fakedata_8.txt.gz......
 processing /data/fakedata_9.txt.gz......
-bin_10log10 21:971
-bin_10log10 22:29856462
-bin_10log10 23:32247244
-bin_10log10 24:4
-bin_10log10 nboxes:20692964
-bin_10log10 nevents:1071943
+bin_10log10 21:1025
+bin_10log10 22:29815914
+bin_10log10 23:32227653
+bin_10log10 24:14
+bin_10log10 nboxes:20664138
+bin_10log10 nevents:1070435
 ...
 ```
 ```
-real    2m51.222s  |  real      2m53.494s  |  real      2m54.885s
-user    2m43.434s  |  user      2m45.929s  |  user      2m46.773s
-sys     0m7.581s   |  sys       0m7.345s   |  sys       0m7.847s
+real    2m48.907s  |  real      2m48.584s  |  real      2m48.328s
+user    2m41.533s  |  user      2m41.191s  |  user      2m40.831s
+sys     0m7.352s   |  sys       0m7.383s   |  sys       0m7.446s
 ```
 
 ### python
@@ -37,13 +37,36 @@ root@X:/work-dir/Test_NaiveParsing# scripts/test_pynaiveparsing.sh
 ...
 processing /data/fakedata_4.txt.gz...
 processing /data/fakedata_2.txt.gz...
-defaultdict(<class 'int'>, {'nevents': 1071943, 'nboxes': 5, 23: 32247244, 22: 29856462, 21: 971, 24: 4})
+defaultdict(<class 'int'>, {'nevents': 1070435, 'nboxes': 20664138, 22: 29815914, 23: 32227653, 21: 1025, 24: 14})
 ...
 ```
 ```
-real    1m58.856s  |  real      1m56.101s  |  real      1m56.221s
-user    1m56.353s  |  user      1m53.510s  |  user      1m53.703s
-sys     0m2.281s   |  sys       0m2.437s   |  sys       0m2.394s
+real    1m57.521s  |  real      1m56.101s  |  real      1m55.019s
+user    1m54.797s  |  user      1m53.420s  |  user      1m52.392s
+sys     0m2.676s   |  sys       0m2.648s   |  sys       0m2.620s
+```
+
+### C#
+```
+#in container
+root@X:/work-dir# scripts/build_csharpclasses.sh
+
+root@X:/work-dir# cd Test_NaiveParsing
+root@X:/work-dir/Test_NaiveParsing# scripts/test_csharpnaiveparsing.sh
+...
+Processing /data/fakedata_4.txt.gz...
+Processing /data/fakedata_2.txt.gz...
+nevents:1070435
+nboxes:20664138
+22:29815914
+23:32227653
+21:1025
+24:14
+```
+```
+real    1m13.091s  |  real      1m12.970s  |  real      1m12.219s
+user    1m9.034s   |  user      1m8.809s   |  user      1m8.390s
+sys     0m4.084s   |  sys       0m4.208s   |  sys       0m3.884s
 ```
 
 ### note
