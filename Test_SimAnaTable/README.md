@@ -16,9 +16,9 @@ processing /data/fakedata_9.txt.gz......
 ...
 ```
 ```
-real    2m51.307s  |  real      2m51.789s  |  real      2m51.225s
-user    2m43.481s  |  user      2m43.703s  |  user      2m43.310s
-sys     0m7.808s   |  sys       0m7.879s   |  sys       0m7.886s
+real    2m50.632s  |  real      2m48.988s  |  real      2m49.377s
+user    2m43.090s  |  user      2m41.458s  |  user      2m41.954s
+sys     0m7.486s   |  sys       0m7.488s   |  sys       0m7.412s
 ```
 
 ### python
@@ -31,9 +31,9 @@ root@X:/work-dir/Test_SimAnaTable# scripts/test_pysimanatable.sh
 ...
 ```
 ```
-real    1m48.339s  |  real      1m48.527s  |  real      1m47.049s
-user    1m47.259s  |  user      1m47.534s  |  user      1m45.970s
-sys     0m0.984s   |  sys       0m0.976s   |  sys       0m1.060s
+real    1m47.451s  |  real      1m46.695s  |  real      1m47.266s
+user    1m46.308s  |  user      1m45.620s  |  user      1m46.240s
+sys     0m1.108s   |  sys       0m1.064s   |  sys       0m1.004s
 ```
 
 ### C#
@@ -50,7 +50,7 @@ MSBuild version 17.8.5+b5265ef37 for .NET
 ...
 ```
 ```
-real    1m15.118s  |  real      1m15.667s  |  real      1m15.566s
-user    1m10.416s  |  user      1m11.573s  |  user      1m11.047s
-sys     0m4.737s   |  sys       0m4.281s   |  sys       0m4.604s
+real    1m14.867s  |  real      1m13.765s  |  real      1m14.935s
+user    1m10.534s  |  user      1m9.899s   |  user      1m10.940s
+sys     0m4.411s   |  sys       0m3.979s   |  sys       0m4.129s
 ```
