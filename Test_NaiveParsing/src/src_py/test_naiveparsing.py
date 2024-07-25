@@ -16,7 +16,7 @@ def aggregate_boxes(out, data):
     out['nevents'] += nevts
     for history_i in history:
         nboxes = len(history_i.boxes)
-        out['nboxes'] = nboxes
+        out['nboxes'] += nboxes
         for box_j in history_i.boxes:
             bin_cost = math.floor(10 * math.log10(box_j.cost)) if box_j.cost > 0 else -99
             out[bin_cost] += box_j.count
