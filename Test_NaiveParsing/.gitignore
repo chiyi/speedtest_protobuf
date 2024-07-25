@@ -1,3 +1,4 @@
 *.log
 test_cpp_naiveparsing
+test_csharp_naiveparsing
 
