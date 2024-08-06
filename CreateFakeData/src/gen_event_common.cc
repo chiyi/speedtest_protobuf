@@ -2,8 +2,10 @@
 #define gen_event_common_cc
 #include <vector>
 #include <string>
+
 #include "TDatime.h"
 #include "TRandom3.h"
+#include "fake_anadata.pb.h"
 
 int64_t gen_evtts(int offset, TRandom3 &rndm, double sigma);
 fake_data::analysis::Box gen_randbox(TRandom3 &rndm);

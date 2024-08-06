@@ -5,11 +5,19 @@
 #include "blocktype.pb.h"
 #include "opponent.pb.h"
 #include "reduced_blockx.pb.h"
+#include "card.pb.h"
 
-#include "gen_block_common.cc"
+#include "TRandom3.h"
+
 fake_data::reduced::BlockXCollection gen_randblkx(int ievt, int64_t ts, TRandom3 &rndm);
 std::string gen_country(TRandom3 &rndm);
 Opponent gen_opponents(TRandom3 &rndm);
+
+std::string gen_id(int ievt, int64_t ts, TRandom3 &rndm);
+std::string gen_idz(TRandom3 &rndm);
+std::string gen_cat_a(TRandom3 &rndm);
+std::string gen_player(TRandom3 &rndm);
+Card gen_randcard(TRandom3 &rndm);
 
 
 fake_data::reduced::BlockXCollection gen_randblkx(int ievt, int64_t ts, TRandom3 &rndm)

@@ -8,6 +8,7 @@
 #cd $DIR_CSHARPPROJ
 #cd ${WORKPATH}/src
 #dotnet new sln -n src_csharp_sln -o src_csharp_sln
+#sed -i 's/\r//g' src_csharp_sln/src_csharp_sln.sln
 #cd ${DIR_CSHARPSLN}
 #dotnet new console -n Test_NaiveParsing
 #dotnet sln add Test_NaiveParsing/Test_NaiveParsing.csproj

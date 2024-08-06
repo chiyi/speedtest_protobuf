@@ -11,11 +11,8 @@ bool chk_para(int argc, char *argv[]);
 void protection(int &nrows_part, int &nthreads);
 void usage();
 #include "job.h"
-#include "job.cpp"
 #include "job_fakedata.h"
-#include "job_fakedata.cpp"
 #include "jobs_scheduler.h"
-#include "jobs_scheduler.cpp"
 
 
 int main(int argc, char *argv[])
@@ -42,6 +39,9 @@ int main(int argc, char *argv[])
  nthreads = TString(argv[4]).Atoi();
  nrows_tail = nrows % nrows_part;
  nparts = nrows / nrows_part + (nrows_tail > 0) * 1;
+ //REMOVE or COMMENT-OUT THIS ACTION FOR SPEED WHEN HAVING CAPABLE MEMORY
+ protection(nrows_part, nthreads);
+
 
  std::cout << "Generating " << nrows << " records of fake data ";
  std::cout << "with " << nparts << " partitions, where each partition has " << nrows_part << " records, except for the tail partition (" << nrows_tail << " records)" << std::endl;
@@ -94,9 +94,6 @@ bool chk_para(int argc, char *argv[])
   std::cout << "nthreads=" << nthreads << " <= 0\n";
   return false;
  }
-
- //REMOVE or COMMENT-OUT THIS ACTION FOR SPEED WHEN HAVING CAPABLE MEMORY
- protection(nrows_part, nthreads);
 
  return true;
 }

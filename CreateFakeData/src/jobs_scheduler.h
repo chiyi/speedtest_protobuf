@@ -10,6 +10,7 @@
 #include "TRandom3.h"
 #include "TDatime.h"
 #include "JobsHandler.h"
+#include "job_fakedata.h"
 
 template <typename JobType>
 class JobsScheduler

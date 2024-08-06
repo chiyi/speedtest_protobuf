@@ -13,7 +13,7 @@ cd ${SCPATH}
 
 # Compile protoclasses
 for file in *.pb.cc; do
-    c++ -g -c -Wall ${CFLAG_COMPILE_PROTOBUF} $file -o ${file%.cc}.o ${LIBS_COMPILE_PROTOBUF}
+ c++ -g -c -O3 -Wall ${CFLAG_COMPILE_PROTOBUF} $file -o ${file%.cc}.o ${LIBS_COMPILE_PROTOBUF}
 done
 
 c++ -g ${CFLAG_COMPILE_ROOT} test_objs.cc *.pb.o -o test_objs ${LIBS_COMPILE_ROOT} ${LIBS_COMPILE_PROTOBUF}

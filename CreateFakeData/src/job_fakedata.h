@@ -12,7 +12,6 @@
 #include "TRandom3.h"
 #include "job.h"
 #include "JobsHandler.h"
-#include "gen_fakeanadata.cc"
 
 class Job_fakedata : public Job
 {
@@ -37,4 +36,5 @@ class Job_fakedata : public Job
   void write_files(const std::vector<fake_data::analysis::FakeAnaData> &res);
 };
 
+void create_ith_fakedata(int job_id, std::vector<fake_data::analysis::FakeAnaData>::iterator &it, int ievt, TRandom3 &rndm);
 #endif

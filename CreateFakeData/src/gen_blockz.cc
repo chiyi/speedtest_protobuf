@@ -8,9 +8,13 @@
 #include "TString.h"
 #include "TMath.h"
 
-#include "gen_block_common.cc"
 fake_data::reduced::BlockZCollection gen_randblkz(int ievt, int64_t ts, TRandom3 &rndm);
 fake_data::reduced::BlockZCollection::EXT_alpha gen_ext(TRandom3 &rndm);
+
+std::string gen_id(int ievt, int64_t ts, TRandom3 &rndm);
+std::string gen_idz(TRandom3 &rndm);
+void gen_cats(std::string &cat_a, std::string &cat_b, std::string &cat_tree, TRandom3 &rndm);
+Card gen_randcard(TRandom3 &rndm);
 
 
 fake_data::reduced::BlockZCollection gen_randblkz(int ievt, int64_t ts, TRandom3 &rndm)

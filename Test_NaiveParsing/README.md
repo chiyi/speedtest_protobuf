@@ -69,6 +69,9 @@ user    1m9.034s   |  user      1m8.809s   |  user      1m8.390s
 sys     0m4.084s   |  sys       0m4.208s   |  sys       0m3.884s
 ```
 
+* reference : dotnets command to initialize solutions/projects  
+  [scripts/init_csharpenv.sh](scripts/init_csharpenv.sh) , [learn.microsoft.com](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-new) 
+
 ### note
 Even when testing with a base64 decoded binary as a std::string,  
 &nbsp; the `cppobj.ParseFromString` method is qualitative slower than `pyobj.FromString` in 100K and 1M loops,  

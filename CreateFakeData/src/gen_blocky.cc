@@ -2,12 +2,18 @@
 #define gen_blocky_cc
 #include <string>
 #include "reduced_blocky.pb.h"
+#include "card.pb.h"
 
 #include "TRandom3.h"
 #include "TString.h"
 
-#include "gen_block_common.cc"
 fake_data::reduced::BlockYCollection gen_randblky(int ievt, int64_t ts, TRandom3 &rndm);
+
+std::string gen_id(int ievt, int64_t ts, TRandom3 &rndm);
+std::string gen_idz(TRandom3 &rndm);
+void gen_cats(std::string &cat_a, std::string &cat_b, std::string &cat_tree, TRandom3 &rndm);
+Card gen_randcard(TRandom3 &rndm);
+std::string gen_player(TRandom3 &rndm);
 
 
 fake_data::reduced::BlockYCollection gen_randblky(int ievt, int64_t ts, TRandom3 &rndm)

@@ -1,7 +1,7 @@
-*.cc
-*.h
+*.pb.cc
+*.pb.h
 *.pcm
 *.d
 *.so
-*.o
+*.pb.o
 test_objs

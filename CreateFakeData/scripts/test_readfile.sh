@@ -11,7 +11,7 @@ LIBS_COMPILE_PROTOBUF=$(pkg-config --libs protobuf)
 
 
 cd ${PROJPATH}
-c++ -g -I${DIR_PROTOOBJS} ${CFLAG_COMPILE_ROOT} src/read_file.cc ${DIR_PROTOOBJS}/*.pb.o -o read_file ${LIBS_COMPILE_ROOT} ${LIBS_COMPILE_PROTOBUF} -lz
+c++ -g -O3 -I${DIR_PROTOOBJS} ${CFLAG_COMPILE_ROOT} src/read_file.cc ${DIR_PROTOOBJS}/*.pb.o -o read_file ${LIBS_COMPILE_ROOT} ${LIBS_COMPILE_PROTOBUF} -lz
 
 ./read_file "/data/fakedata_1.txt.gz"
 #./read_file "/data/fakedata_*.txt.gz"
