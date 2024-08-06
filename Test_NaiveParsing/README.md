@@ -73,3 +73,6 @@ sys     0m4.084s   |  sys       0m4.208s   |  sys       0m3.884s
 Even when testing with a base64 decoded binary as a std::string,  
 &nbsp; the `cppobj.ParseFromString` method is qualitative slower than `pyobj.FromString` in 100K and 1M loops,  
 &nbsp; based on my environment's build versions.
+
+After speedtest with protobuf v20.2, performace is improved arround 30% in old version. [branch test/v20.2](https://github.com/chiyi/speedtest_protobuf/tree/test/v20.2/Test_NaiveParsing)  
+&nbsp; It's implied the depencies/versions have to be tunned further when building C++ environments/codes.

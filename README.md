@@ -2,6 +2,7 @@
 This is a containerized environment for running speedtest to evaluate the performance of protobuf deserialization across different package versions.
 
 * Build image from [PrepareImage](PrepareImage)
+  * testing on [protobuf v27.2](https://github.com/protocolbuffers/protobuf/tree/v27.2)
 * [project:CreateFakeData](CreateFakeData) generates a fake dataset for this repository using the specified [proto-files](workdir/proto)
 
 ## speedtest
@@ -32,3 +33,10 @@ This is a containerized environment for running speedtest to evaluate the perfor
   | C# classes     | `real    1m14.867s` | `real    1m13.765s` | `real    1m14.935s` |
   |                | `user    1m10.534s` | `user    1m 9.899s` | `user    1m10.940s` |
   |                | `sys     0m 4.411s` | `sys     0m 3.979s` | `sys     0m 4.129s` |
+
+## speed
+* After speedtest, the protobuf_v27.2 C++ parsing performance is slower than protobuf_v20.2 C++ in this environment.  
+  * the elapsed time is about 3:2
+  * more details for setting protobuf_v20.2 are in my branch [[test/v20.2](https://github.com/chiyi/speedtest_protobuf/tree/test/v20.2)] .  
+* python classes without C++ implementation is pretty slow in protobuf_v20.2 .
+  * about 9 times elapsed time [speedtest on protobuf v20.2](https://github.com/chiyi/speedtest_protobuf/blob/test/v20.2/README.md)
