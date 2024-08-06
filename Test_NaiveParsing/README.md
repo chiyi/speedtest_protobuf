@@ -22,9 +22,9 @@ bin_10log10 nevents:1070435
 ...
 ```
 ```
-real    2m48.907s  |  real      2m48.584s  |  real      2m48.328s
-user    2m41.533s  |  user      2m41.191s  |  user      2m40.831s
-sys     0m7.352s   |  sys       0m7.383s   |  sys       0m7.446s
+real    2m9.062s  |  real    2m8.139s  |  real    2m8.643s
+user    2m0.602s  |  user    2m0.959s  |  user    2m1.563s
+sys     0m7.923s  |  sys     0m7.170s  |  sys     0m7.070s
 ```
 
 ### python
@@ -41,9 +41,9 @@ defaultdict(<class 'int'>, {'nevents': 1070435, 'nboxes': 20664138, 22: 29815914
 ...
 ```
 ```
-real    1m57.521s  |  real      1m56.101s  |  real      1m55.019s
-user    1m54.797s  |  user      1m53.420s  |  user      1m52.392s
-sys     0m2.676s   |  sys       0m2.648s   |  sys       0m2.620s
+real    17m31.188s
+user    17m29.464s
+sys     0m1.540s
 ```
 
 ### C#
@@ -64,12 +64,8 @@ nboxes:20664138
 24:14
 ```
 ```
-real    1m13.091s  |  real      1m12.970s  |  real      1m12.219s
-user    1m9.034s   |  user      1m8.809s   |  user      1m8.390s
-sys     0m4.084s   |  sys       0m4.208s   |  sys       0m3.884s
+real    1m12.829s  |  real    1m12.028s  |  real    1m12.613s
+user    1m8.627s   |  user    1m7.853s   |  user    1m8.638s
+sys     0m4.270s   |  sys     0m4.238s   |  sys     0m4.035s
 ```
 
-### note
-Even when testing with a base64 decoded binary as a std::string,  
-&nbsp; the `cppobj.ParseFromString` method is qualitative slower than `pyobj.FromString` in 100K and 1M loops,  
-&nbsp; based on my environment's build versions.

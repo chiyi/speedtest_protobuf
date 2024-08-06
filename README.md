@@ -8,27 +8,27 @@ This is a containerized environment for running speedtest to evaluate the perfor
 * [Test_NaiveParsing](Test_NaiveParsing) : naively parsing and sum up
   | class language |         1st         |         2nd         |         3rd         |
   |:--------------:|:-------------------:|:-------------------:|:-------------------:|
-  | C++ classes    | `real    2m48.907s` | `real    2m48.584s` | `real    2m48.328s` |
-  |                | `user    2m41.533s` | `user    2m41.191s` | `user    2m40.831s` |
-  |                | `sys     0m 7.352s` | `sys     0m 7.383s` | `sys     0m 7.446s` |
-  | python classes | `real    1m57.521s` | `real    1m56.101s` | `real    1m55.019s` |
-  |                | `user    1m54.797s` | `user    1m53.420s` | `user    1m52.392s` |
-  |                | `sys     0m 2.676s` | `sys     0m 2.648s` | `sys     0m 2.620s` |
-  | C# classes     | `real    1m13.091s` | `real    1m12.970s` | `real    1m12.219s` |
-  |                | `user    1m 9.034s` | `user    1m 8.809s` | `user    1m 8.390s` |
-  |                | `sys     0m 4.084s` | `sys     0m 4.208s` | `sys     0m 3.884s` |
+  | C++ classes    | `real    2m 9.062s` | `real    2m 8.139s` | `real    2m 8.643s` |
+  |                | `user    2m 0.602s` | `user    2m 0.959s` | `user    2m 1.563s` |
+  |                | `sys     0m 7.923s` | `sys     0m 7.170s` | `sys     0m 7.070s` |
+  | python classes | `real   17m31.188s` |  |  |
+  |                | `user   17m29.464s` |  |  |
+  |                | `sys     0m 1.540s` |  |  |
+  | C# classes     | `real    1m12.829s` | `real    1m12.028s` | `real    1m12.613s` |
+  |                | `user    1m 8.627s` | `user    1m 7.853s` | `user    1m 8.638s` |
+  |                | `sys     0m 4.270s` | `sys     0m 4.238s` | `sys     0m 4.035s` |
 
 
-  
+
 * [Test_SimAnaTable](Test_SimAnaTable) : complicated scanning as the simulation
   | class language |         1st         |         2nd         |         3rd         |
   |:--------------:|:-------------------:|:-------------------:|:-------------------:|
-  | C++ classes    | `real    2m50.632s` | `real    2m48.988s` | `real    2m49.377s` |
-  |                | `user    2m43.090s` | `user    2m41.458s` | `user    2m41.954s` |
-  |                | `sys     0m 7.486s` | `sys     0m 7.488s` | `sys     0m 7.412s` |
-  | python classes | `real    1m47.451s` | `real    1m46.695s` | `real    1m47.266s` |
-  |                | `user    1m46.308s` | `user    1m45.620s` | `user    1m46.240s` |
-  |                | `sys     0m 1.108s` | `sys     0m 1.064s` | `sys     0m 1.004s` |
-  | C# classes     | `real    1m14.867s` | `real    1m13.765s` | `real    1m14.935s` |
-  |                | `user    1m10.534s` | `user    1m 9.899s` | `user    1m10.940s` |
-  |                | `sys     0m 4.411s` | `sys     0m 3.979s` | `sys     0m 4.129s` |
+  | C++ classes    | `real    2m14.763s` | `real    2m14.590s` | `real    2m14.539s` |
+  |                | `user    2m 7.533s` | `user    2m 7.301s` | `user    2m 7.413s` |
+  |                | `sys     0m 7.212s` | `sys     0m 7.273s` | `sys     0m 7.109s` |
+  | python classes | `real   18m28.153s` |  |  |
+  |                | `user   18m26.247s` |  |  |
+  |                | `sys     0m 1.444s` |  |  |
+  | C# classes     | `real    1m14.605s` | `real    1m14.209s` | `real    1m13.157s` |
+  |                | `user    1m10.352s` | `user    1m10.586s` | `user    1m 9.376s` |
+  |                | `sys     0m 4.283s` | `sys     0m 3.691s` | `sys     0m 3.903s` |

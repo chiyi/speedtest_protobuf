@@ -18,7 +18,7 @@ fake ana data
 0.997
 ```
 
-### Create my fake dataset
+### Create my fake dataset (same data generated with protobuf v27.2)
 ```
 root@X:/work-dir# cd CreateFakeData
 root@X:/work-dir/CreateFakeData# scripts/build_faker.sh
