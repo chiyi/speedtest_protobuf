@@ -1,5 +1,6 @@
 #include "jobs_scheduler.h"
 
+template class JobsScheduler<Job_fakedata>;
 #ifndef jobs_scheduler_cpp
 #define jobs_scheduler_cpp
 

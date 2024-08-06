@@ -14,7 +14,4 @@ class JobsHandler
     GLOBAL_CANCEL_FLAG.store(true);
   }
 };
-
-std::atomic<bool> JobsHandler::GLOBAL_CANCEL_FLAG{false};
-
 #endif

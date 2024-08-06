@@ -2,12 +2,15 @@
 #define gen_event_blockz_cc
 #include <string>
 #include "fake_anadata.pb.h"
+#include "reduced_blockz.pb.h"
 
 #include "TRandom3.h"
 
-#include "gen_event_common.cc"
-#include "gen_blockz.cc"
 fake_data::analysis::Event gen_randevt_blkz(int ievt, TRandom3 &rndm, int offset, double sigma);
+
+int64_t gen_evtts(int offset, TRandom3 &rndm, double sigma);
+fake_data::reduced::BlockZCollection gen_randblkz(int ievt, int64_t ts, TRandom3 &rndm);
+fake_data::analysis::Box gen_randbox(TRandom3 &rndm);
 
 
 fake_data::analysis::Event gen_randevt_blkz(int ievt, TRandom3 &rndm, int offset, double sigma)

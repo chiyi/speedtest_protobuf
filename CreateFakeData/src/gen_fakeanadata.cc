@@ -3,6 +3,9 @@
 #include <vector>
 #include <string>
 #include "fake_anadata.pb.h"
+#include "reduced_blockx.pb.h"
+#include "reduced_blocky.pb.h"
+#include "reduced_blockz.pb.h"
 
 #include "TF1.h"
 #include "TH1I.h"
@@ -11,13 +14,15 @@
 #include "TString.h"
 #include "TAxis.h"
 
-#include "gen_blockx.cc"
-#include "gen_blocky.cc"
-#include "gen_blockz.cc"
-#include "gen_event_blockz.cc"
 void create_ith_fakedata(int job_id, std::vector<fake_data::analysis::FakeAnaData>::iterator &it, int ievt, TRandom3 &rndm);
 std::string gen_hashed_name(TRandom3 &rndm);
 fake_data::analysis::Event gen_randevt(int job_id, int ievt, TRandom3 &rndm, const fake_data::analysis::Event &evtblkz);
+
+fake_data::analysis::Event gen_randevt_blkz(int ievt, TRandom3 &rndm, int offset, double sigma);
+fake_data::reduced::BlockXCollection gen_randblkx(int ievt, int64_t ts, TRandom3 &rndm);
+fake_data::reduced::BlockYCollection gen_randblky(int ievt, int64_t ts, TRandom3 &rndm);
+fake_data::reduced::BlockZCollection gen_randblkz(int ievt, int64_t ts, TRandom3 &rndm);
+fake_data::analysis::Box gen_randbox(TRandom3 &rndm);
 
 
 void create_ith_fakedata(int job_id, std::vector<fake_data::analysis::FakeAnaData>::iterator &it, int ievt, TRandom3 &rndm)

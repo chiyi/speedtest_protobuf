@@ -1,4 +1,4 @@
-FROM rootproject/root:6.32.02-ubuntu24.04
+FROM rootproject/root:6.32.02-ubuntu24.04 as BASE
 
 MAINTAINER kaiyi
 
@@ -15,4 +15,15 @@ RUN /extapps/scripts/install_cppbase64.sh
 RUN /extapps/scripts/install_dotnet8.sh 2>&1 | tee /extapps/scripts/install_dotnet8.log
 
 RUN mkdir /work-dir
+
+
+FROM BASE as USER
+RUN echo "USER PART"
+ARG USERNAME
+ARG GROUPNAME
+ARG UID
+ARG GID
+
+RUN echo ${USERNAME}:${GROUPNAME} , ${UID}:${GID}
+RUN /extapps/scripts/set_user.sh ${USERNAME}:${GROUPNAME} ${UID}:${GID}
 
