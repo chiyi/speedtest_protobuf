@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test_NaiveParsing", "Test_NaiveParsing\Test_NaiveParsing.csproj", "{076D1820-3F18-4200-B3AF-6FEBB0BE9D5C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test_NaiveParsing", "Test_NaiveParsing\Test_NaiveParsing.csproj", "{6CD40E3F-64A6-47A9-A81A-BABC4C38243E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,9 +14,9 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{076D1820-3F18-4200-B3AF-6FEBB0BE9D5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{076D1820-3F18-4200-B3AF-6FEBB0BE9D5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{076D1820-3F18-4200-B3AF-6FEBB0BE9D5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{076D1820-3F18-4200-B3AF-6FEBB0BE9D5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CD40E3F-64A6-47A9-A81A-BABC4C38243E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CD40E3F-64A6-47A9-A81A-BABC4C38243E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CD40E3F-64A6-47A9-A81A-BABC4C38243E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CD40E3F-64A6-47A9-A81A-BABC4C38243E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

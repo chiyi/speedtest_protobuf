@@ -8,6 +8,8 @@ RUN mkdir /extapps
 ADD scripts /extapps/scripts
 RUN /extapps/scripts/install_bazel.sh 2>&1 | tee /extapps/scripts/install_bazel.log
 COPY abseil_examples /extapps/abseil_examples
+
+RUN apt update -y && apt install -y autoconf automake libtool curl make g++ unzip
 RUN /extapps/scripts/install_protobuf.sh 2>&1 | tee /extapps/scripts/install_protobuf.log
 RUN ldconfig
 RUN /extapps/scripts/install_protobuf_python.sh 2>&1 | tee /extapps/scripts/install_protobuf_python.log

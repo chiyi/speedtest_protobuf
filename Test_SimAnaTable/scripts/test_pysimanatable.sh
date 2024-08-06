@@ -14,8 +14,8 @@ cd ${PROJPATH}
 echo "testing..."
 
 (time python src/src_py/test_simanatable.py "/data/fakedata_*.txt.gz" > ${LOGFILE} 2>&1) &>> ${LOGFILE}
-(time python src/src_py/test_simanatable.py "/data/fakedata_*.txt.gz" >> ${LOGFILE} 2>&1) &>> ${LOGFILE}
-(time python src/src_py/test_simanatable.py "/data/fakedata_*.txt.gz" >> ${LOGFILE} 2>&1) &>> ${LOGFILE}
+#(time python src/src_py/test_simanatable.py "/data/fakedata_*.txt.gz" >> ${LOGFILE} 2>&1) &>> ${LOGFILE}
+#(time python src/src_py/test_simanatable.py "/data/fakedata_*.txt.gz" >> ${LOGFILE} 2>&1) &>> ${LOGFILE}
 
 cat ${LOGFILE} | grep  "^real" -C4
 
