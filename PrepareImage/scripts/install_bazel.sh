@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 echo "Step 1: Add Bazel distribution URI as a package source https://bazel.build/install/ubuntu#add-dis-uri"
 apt install -y apt-transport-https curl gnupg
