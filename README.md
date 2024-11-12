@@ -2,41 +2,40 @@
 This is a containerized environment for running speedtest to evaluate the performance of protobuf deserialization across different package versions.
 
 * Build image from [PrepareImage](PrepareImage)
-  * testing on [protobuf v27.2](https://github.com/protocolbuffers/protobuf/tree/v27.2)
+  * testing on [protobuf v28.3](https://github.com/protocolbuffers/protobuf/tree/v28.3)
 * [project:CreateFakeData](CreateFakeData) generates a fake dataset for this repository using the specified [proto-files](workdir/proto)
 
 ## speedtest
 * [Test_NaiveParsing](Test_NaiveParsing) : naively parsing and sum up
   | class language |         1st         |         2nd         |         3rd         |
   |:--------------:|:-------------------:|:-------------------:|:-------------------:|
-  | C++ classes    | `real    2m48.907s` | `real    2m48.584s` | `real    2m48.328s` |
-  |                | `user    2m41.533s` | `user    2m41.191s` | `user    2m40.831s` |
-  |                | `sys     0m 7.352s` | `sys     0m 7.383s` | `sys     0m 7.446s` |
-  | python classes | `real    1m57.521s` | `real    1m56.101s` | `real    1m55.019s` |
-  |                | `user    1m54.797s` | `user    1m53.420s` | `user    1m52.392s` |
-  |                | `sys     0m 2.676s` | `sys     0m 2.648s` | `sys     0m 2.620s` |
-  | C# classes     | `real    1m13.091s` | `real    1m12.970s` | `real    1m12.219s` |
-  |                | `user    1m 9.034s` | `user    1m 8.809s` | `user    1m 8.390s` |
-  |                | `sys     0m 4.084s` | `sys     0m 4.208s` | `sys     0m 3.884s` |
+  | C++ classes    | `real    1m44.373s` | `real    1m44.048s` | `real    1m44.007s` |
+  |                | `user    1m43.551s` | `user    1m43.197s` | `user    1m43.229s` |
+  |                | `sys     0m 0.814s` | `sys     0m 0.844s` | `sys     0m 0.773s` |
+  | python classes | `real    1m56.637s` | `real    1m56.675s` | `real    1m58.888s` |
+  |                | `user    1m53.900s` | `user    1m53.815s` | `user    1m55.834s` |
+  |                | `sys     0m 2.728s` | `sys     0m 2.851s` | `sys     0m 3.045s` |
+  | C# classes     | `real    1m16.579s` | `real    1m16.940s` | `real    1m16.733s` |
+  |                | `user    1m12.648s` | `user    1m12.748s` | `user    1m12.027s` |
+  |                | `sys     0m 4.003s` | `sys     0m 4.267s` | `sys     0m 4.779s` |
 
 
   
 * [Test_SimAnaTable](Test_SimAnaTable) : complicated scanning as the simulation
   | class language |         1st         |         2nd         |         3rd         |
   |:--------------:|:-------------------:|:-------------------:|:-------------------:|
-  | C++ classes    | `real    2m50.632s` | `real    2m48.988s` | `real    2m49.377s` |
-  |                | `user    2m43.090s` | `user    2m41.458s` | `user    2m41.954s` |
-  |                | `sys     0m 7.486s` | `sys     0m 7.488s` | `sys     0m 7.412s` |
-  | python classes | `real    1m47.451s` | `real    1m46.695s` | `real    1m47.266s` |
-  |                | `user    1m46.308s` | `user    1m45.620s` | `user    1m46.240s` |
-  |                | `sys     0m 1.108s` | `sys     0m 1.064s` | `sys     0m 1.004s` |
-  | C# classes     | `real    1m14.867s` | `real    1m13.765s` | `real    1m14.935s` |
-  |                | `user    1m10.534s` | `user    1m 9.899s` | `user    1m10.940s` |
-  |                | `sys     0m 4.411s` | `sys     0m 3.979s` | `sys     0m 4.129s` |
+  | C++ classes    | `real    1m46.899s` | `real    1m46.721s` | `real    1m46.822s` |
+  |                | `user    1m46.005s` | `user    1m45.836s` | `user    1m45.968s` |
+  |                | `sys     0m 0.870s` | `sys     0m 0.860s` | `sys     0m 0.830s` |
+  | python classes | `real    1m50.238s` | `real    1m49.799s` | `real    1m49.971s` |
+  |                | `user    1m48.572s` | `user    1m48.066s` | `user    1m48.274s` |
+  |                | `sys     0m 1.612s` | `sys     0m 1.710s` | `sys     0m 1.673s` |
+  | C# classes     | `real    1m18.654s` | `real    1m17.949s` | `real    1m18.081s` |
+  |                | `user    1m14.233s` | `user    1m13.515s` | `user    1m13.868s` |
+  |                | `sys     0m 4.545s` | `sys     0m 4.579s` | `sys     0m 4.360s` |
 
 ## speed
-* After speedtest, the protobuf_v27.2 C++ parsing performance is slower than protobuf_v20.2 C++ in this environment.  
-  * the elapsed time is about 3:2
-  * more details for setting protobuf_v20.2 are in my branch [[test/v20.2](https://github.com/chiyi/speedtest_protobuf/tree/test/v20.2)] .  
-* python classes without C++ implementation is pretty slow in protobuf_v20.2 .
+* After the speedtest, the performance of protobuf_v28.3 C++ parsing, with **Turbo-Base64 included for base64 encode/decode**([Turbo-Base64](https://github.com/powturbo/Turbo-Base64)) and other associated tuning, is now slightly better than protobuf_v20.2 C++ in this environment.
+  * For more details on settings for protobuf_v20.2, see the branch[[test/v20.2](https://github.com/chiyi/speedtest_protobuf/tree/test/v20.2)].
+* Python classes without C++ implementation are significantly slower in protobuf_v20.2.
   * about 9 times elapsed time [speedtest on protobuf v20.2](https://github.com/chiyi/speedtest_protobuf/blob/test/v20.2/README.md)

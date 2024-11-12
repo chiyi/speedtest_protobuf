@@ -4,10 +4,10 @@
 #include <vector>
 #include <zlib.h>
 #include <google/protobuf/util/json_util.h>
+#include "turbob64.h"
 #include "fake_anadata.pb.h"
 
 #include "TSystem.h"
-#include "TBase64.h"
 #include "TString.h"
 
 // user-defined functions
@@ -77,19 +77,22 @@ std::vector<std::string> get_filenames(const std::string& filename_fmt)
 
 void read_file(std::string inpfile)
 {
- const int size_gzbuf=10240;
- int ith_line=0, from=0, errnum=0, bytesRead=0;
- std::string outbin;
- const TString delim="\001\002\003\004\005\006\007\010";
- char gzbuf[size_gzbuf];
- TString line, all_lines, errmsg;
+ const int size_gzchar=1000000;
+ unsigned int len_b64dec=0;
+ int ith_line=0, from=0, errnum=0;
+ const TString delim="\001\002\003\004\005\006\007\010\n";
+ char gzbuf[size_gzchar];
+ TString line, errmsg;
+ std::vector<uint8_t> bin_decoded(4194304);
+ std::vector<TString> all_lines;
  fake_data::analysis::FakeAnaData outobj;
  gzFile gzfs;
 
 
  gzfs = gzopen(inpfile.c_str(), "rb");
- while ((bytesRead = gzread(gzfs, gzbuf, size_gzbuf)) > 0)
-  all_lines.Append(gzbuf, bytesRead);
+ while (gzgets(gzfs, gzbuf, size_gzchar) != nullptr)
+  all_lines.push_back(gzbuf);
+ gzerror(gzfs, &errnum);
  if(errnum != Z_OK)
  {
   errmsg = gzerror(gzfs, &errnum);
@@ -98,17 +101,20 @@ void read_file(std::string inpfile)
  }
  gzclose(gzfs);
 
- while (all_lines.Tokenize(line, from, "\n"))
+ for (auto const &r_line: all_lines)
  {
-  if (!line.EndsWith(delim))
+  if (!r_line.EndsWith(delim))
   {
    std::cout << "WARN: Unexpected Newline detected !!!\n";
    continue;
   }
-  line = line(0, line.Length() - 8);
-  line = TBase64::Decode(line.Data());
-  outbin = std::string(line, line.Length());
-  if (!outobj.ParseFromString(outbin))
+  line = r_line(0, r_line.Length() - delim.Length());
+  len_b64dec = tb64dec(
+   reinterpret_cast<const unsigned char*>(line.Data()),
+   line.Length(),
+   bin_decoded.data()
+  );
+  if (!outobj.ParseFromArray(reinterpret_cast<const char*>(bin_decoded.data()), len_b64dec))
   {
    std::cout << "WARN: Parse Failed.\n";
    continue;

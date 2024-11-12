@@ -13,6 +13,7 @@ RUN ldconfig
 RUN /extapps/scripts/install_protobuf_python.sh 2>&1 | tee /extapps/scripts/install_protobuf_python.log
 RUN /extapps/scripts/install_cppbase64.sh
 RUN /extapps/scripts/install_dotnet8.sh 2>&1 | tee /extapps/scripts/install_dotnet8.log
+RUN /extapps/scripts/install_turbobase64.sh
 
 RUN mkdir /work-dir
 

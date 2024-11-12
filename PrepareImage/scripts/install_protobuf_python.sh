@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 DIR_EXT="/extapps"
 DIR_PROTOBUF="${DIR_EXT}/protobuf"

@@ -6,10 +6,10 @@
 #include <numeric>
 #include <algorithm>
 #include <zlib.h>
+#include "turbob64.h"
 #include "fake_anadata.pb.h"
 
 #include "TSystem.h"
-#include "TBase64.h"
 #include "TString.h"
 #include "TMath.h"
 
@@ -88,12 +88,14 @@ std::vector<std::string> get_filenames(const std::string& filename_fmt)
 
 void simulate_analysis(std::map<std::string, SimData_Rival> &out, std::string inpfile)
 {
- const int size_gzbuf=2097152;
- int from=0, errnum=0, bytesRead=0;
- std::string outbin;
- const TString delim="\001\002\003\004\005\006\007\010";
- char gzbuf[size_gzbuf];
- TString line, all_lines, errmsg;
+ const int size_gzchar=1000000;
+ unsigned int len_b64dec=0;
+ int from=0, errnum=0, size_repeated_history=0;
+ const TString delim="\001\002\003\004\005\006\007\010\n";
+ char gzbuf[size_gzchar];
+ TString line, errmsg;
+ std::vector<uint8_t> bin_decoded(4194304);
+ std::vector<TString> all_lines;
  fake_data::analysis::FakeAnaData data;
  gzFile gzfs;
 
@@ -105,8 +107,8 @@ void simulate_analysis(std::map<std::string, SimData_Rival> &out, std::string in
   std::cerr << "Error opening file: " << inpfile << std::endl;
   exit(EXIT_FAILURE);
  }
- while ((bytesRead = gzread(gzfs, gzbuf, size_gzbuf)) > 0)
-  all_lines.Append(gzbuf, bytesRead);
+ while (gzgets(gzfs, gzbuf, size_gzchar) != nullptr)
+  all_lines.push_back(gzbuf);
  gzerror(gzfs, &errnum);
  if(errnum != Z_OK)
  {
@@ -117,18 +119,22 @@ void simulate_analysis(std::map<std::string, SimData_Rival> &out, std::string in
  gzclose(gzfs);
 
  // data rows
- while (all_lines.Tokenize(line, from, "\n"))
+ for (auto const &r_line: all_lines)
  {
-  if (!line.EndsWith(delim))
+  //if (!line.EndsWith(delim))
+  if (!r_line.EndsWith(delim))
   {
    std::cout << "WARN: Unexpected Newline detected !!!\n";
    continue;
   }
   data.Clear();
-  line = line(0, line.Length() - 8);
-  line = TBase64::Decode(line.Data());
-  outbin = std::string(line, line.Length());
-  if (!data.ParseFromString(outbin))
+  line = r_line(0, r_line.Length() - delim.Length());
+  len_b64dec = tb64dec(
+   reinterpret_cast<const unsigned char*>(line.Data()),
+   line.Length(),
+   bin_decoded.data()
+  );
+  if (!data.ParseFromArray(reinterpret_cast<const char*>(bin_decoded.data()), len_b64dec))
   {
    std::cout << "WARN: Parse Failed.\n";
    continue;

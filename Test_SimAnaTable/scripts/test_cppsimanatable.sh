@@ -10,13 +10,15 @@ LIBS_COMPILE_ROOT=$(root-config --cflags --glibs)
 CFLAG_COMPILE_PROTOBUF=$(pkg-config --cflags protobuf)
 LIBS_COMPILE_PROTOBUF=$(pkg-config --libs protobuf)
 #DIR_CPPBASE64="/extapps/cpp-base64"
+DIR_TURBOBASE64="/extapps/Turbo-Base64"
+LIBS_TURBOBASE64="${DIR_TURBOBASE64}/turbo*.o"
 LOGFILE="${PROJPATH}/test_cpp_simanatable.log"
 
 
 cd ${PROJPATH}
 echo "building..."
-#c++ -g -I${DIR_PROTOOBJS} ${CFLAG_COMPILE_ROOT} src/src_cpp/test_simanatable.cpp ${DIR_PROTOOBJS}/*.pb.o -o test_cpp_simanatable ${LIBS_COMPILE_ROOT} ${LIBS_COMPILE_PROTOBUF} -lz
-c++ -g -O3 -I${DIR_PROTOOBJS} ${CFLAG_COMPILE_ROOT} src/src_cpp/test_simanatable.cpp ${DIR_PROTOOBJS}/*.pb.o -o test_cpp_simanatable ${LIBS_COMPILE_ROOT} ${LIBS_COMPILE_PROTOBUF} -lz
+#c++ -g -I${DIR_PROTOOBJS} -I${DIR_TURBOBASE64} ${CFLAG_COMPILE_ROOT} src/src_cpp/test_simanatable.cpp ${DIR_PROTOOBJS}/*.pb.o ${LIBS_TURBOBASE64} -o test_cpp_simanatable ${LIBS_COMPILE_ROOT} ${LIBS_COMPILE_PROTOBUF} -lz
+c++ -g -O3 -I${DIR_PROTOOBJS} -I${DIR_TURBOBASE64} ${CFLAG_COMPILE_ROOT} src/src_cpp/test_simanatable.cpp ${DIR_PROTOOBJS}/*.pb.o ${LIBS_TURBOBASE64} -o test_cpp_simanatable ${LIBS_COMPILE_ROOT} ${LIBS_COMPILE_PROTOBUF} -lz
 
 echo "testing..."
 (time ./test_cpp_simanatable "/data/fakedata_*.txt.gz" > ${LOGFILE} 2>&1 ) &>> ${LOGFILE}

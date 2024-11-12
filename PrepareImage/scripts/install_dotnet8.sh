@@ -1,4 +1,6 @@
 #!/bin/bash
+set -e
+
 DIR_EXT="/extapps"
 DIR_DOTNET8="${DIR_EXT}/dotnet-8"
 

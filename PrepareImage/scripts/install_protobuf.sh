@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 DIR_EXT="/extapps"
 DIR_PROTOBUF="${DIR_EXT}/protobuf"
@@ -9,7 +10,7 @@ echo PYTHONPATH=$PYTHONPATH
 
 
 cd ${DIR_EXT}
-git clone --branch v27.2 https://github.com/protocolbuffers/protobuf.git
+git clone --branch v28.3 https://github.com/protocolbuffers/protobuf.git
 cd protobuf
 git submodule update --init --recursive
 
@@ -28,7 +29,7 @@ cmake --build . --parallel 10 --target hello_world
 ./hello_world
 
 cd ${DIR_PROTOBUF}
-cmake . 2>&1 | tee build_configure_protobuf.log
+cmake -DABSL_PROPAGATE_CXX_STD=ON -Wno-undef . 2>&1 | tee build_configure_protobuf.log
 cmake --build . --parallel 10 2>&1 | tee build_protobuf.log
 ctest --verbose --parallel 10
 cmake --install .

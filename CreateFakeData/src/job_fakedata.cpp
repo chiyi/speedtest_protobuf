@@ -57,6 +57,7 @@ void Job_fakedata::write_files(const std::vector<fake_data::analysis::FakeAnaDat
 
  std::string delim, outbin;
  TString outstr;
+ std::vector<unsigned char> bin_encoded(1000000);
  gzFile gzfs;
 
 
@@ -65,7 +66,12 @@ void Job_fakedata::write_files(const std::vector<fake_data::analysis::FakeAnaDat
  for (const auto &row : res)
  {
   outbin = row.SerializeAsString();
-  outstr += TBase64::Encode(outbin.c_str(), outbin.length());
+  size_t size_b64enc = tb64enc(
+   reinterpret_cast<const unsigned char*>(outbin.data()),
+   outbin.length(),
+   bin_encoded.data()
+  );
+  outstr += std::string(bin_encoded.begin(), bin_encoded.begin() + size_b64enc);
   outstr += delim;
   if (JobsHandler::GLOBAL_CANCEL_FLAG.load())
    break;
