@@ -35,7 +35,7 @@ This is a containerized environment for running speedtest to evaluate the perfor
   |                | `sys     0m 4.545s` | `sys     0m 4.579s` | `sys     0m 4.360s` |
 
 ## speed
-* After speedtest, the performance of protobuf_v28.3 C++ parsing with some performance tuning is now roughly equivalent to protobuf_v20.2 C++ in this environment.
+* After the speedtest, the performance of protobuf_v28.3 C++ parsing, with **Turbo-Base64 included for base64 encode/decode**([Turbo-Base64](https://github.com/powturbo/Turbo-Base64)) and other associated tuning, is now slightly better than protobuf_v20.2 C++ in this environment.
   * For more details on settings for protobuf_v20.2, see the branch[[test/v20.2](https://github.com/chiyi/speedtest_protobuf/tree/test/v20.2)].
 * Python classes without C++ implementation are significantly slower in protobuf_v20.2.
   * about 9 times elapsed time [speedtest on protobuf v20.2](https://github.com/chiyi/speedtest_protobuf/blob/test/v20.2/README.md)
